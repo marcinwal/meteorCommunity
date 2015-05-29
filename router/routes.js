@@ -2,15 +2,17 @@ Router.configure({
   layoutTemplate: 'masterLayout'
 });
 
-Router.route('/',function(){
-  waitOn: function(){
+Router.route('/',{
+  waitOn: function () {
     return Meteor.subscribe('profiles');
   },
   template: 'home',
-  data: function(){
-    return{
-      profiles: ProfilesCollection.find({},{limit:10});
-    }
+  data: function () {
+    return {
+      profiles: ProfilesCollection.find({}, {
+        limit: 10
+      })
+    };
   }
 });
 
@@ -23,7 +25,7 @@ Router.route('profile/manuel',function(){
   this.render('profileDetail');
 });
 
-Router.route('/profile/:_id',function(){
+Router.route('/profile/:_id',{
   layoutTemplate: 'profileLayout',
   waitOn: function(){
     return Meteor.subscribe('profiles',this.params._id);
